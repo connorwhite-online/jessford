@@ -1,0 +1,42 @@
+.nav {
+    display: none;
+}
+
+.subNav {
+    
+}
+
+.navLink {
+    
+}
+.navLinkActive {
+    text-decoration: underline;
+}
+
+.menuButton {
+    position: fixed;
+    bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 5px, 20px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media screen and (min-width: 768px) {
+    .nav {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .subNav {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+    .menuButton {
+        display: none;
+    }
+}
