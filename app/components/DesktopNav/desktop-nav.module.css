@@ -7,10 +7,12 @@
 }
 
 .navLink {
-    
+    font-family: var(--montreal-regular);
+    font-size: 16px;
 }
 .navLinkActive {
-    text-decoration: underline;
+    font-family: var(--montreal-bold);
+    font-size: 16px;
 }
 
 .menuButton {
@@ -29,6 +31,7 @@
     .nav {
         display: flex;
         justify-content: space-between;
+        padding: 2.5dvh 1.5dvw;
     }
 
     .subNav {

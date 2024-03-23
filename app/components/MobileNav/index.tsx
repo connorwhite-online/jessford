@@ -1,12 +1,12 @@
 'use client';
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import styles from "./menu.module.css";
+import styles from "./mobile-nav.module.css";
 
-export default function Menu() {
+export default function MobileNav() {
 const pathname = usePathname();
 
 const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +16,7 @@ const navRef = React.useRef<HTMLDivElement>(null);
 // console.log(menuItems);
 
 useGSAP(() => {
+    
     const MenuTl = gsap.timeline({ paused: true });
     MenuTl.fromTo(navRef.current, {
         display: "none",
@@ -26,13 +27,10 @@ useGSAP(() => {
     menuOpen ? MenuTl.play() : MenuTl.reverse();
 }, [menuOpen]);
 
-// useGSAP(() => {
-//     menuOpen ? gsap.set(navRef.current, { display: "flex" }) : gsap.set(navRef.current, { display: "none" });
-// }, [menuOpen]);
-
 return (
     <>
     <nav className={styles.nav} ref={navRef}>
+        <h1 className={styles.title}>Jess Ford</h1>
         <ul className={styles.subNav}>
             <li>
                 <Link href="/" onClick={() => setMenuOpen(false)} className={`link ${pathname === '/' ? styles.navLinkActive : styles.navLink}`}>
@@ -57,19 +55,19 @@ return (
         </ul>
         <ul className={styles.subNav}>
             <li>
-                <Link href="https://www.instagram.com/jessford.care" target="_blank">
+                <Link className={styles.navLink} href="https://www.instagram.com/jessford.care" target="_blank">
                     Instagram
                 </Link>
             </li>
             <li>
-                <Link href="mailto:jessfordcare@gmail.com">
+                <Link className={styles.navLink} href="mailto:jessfordcare@gmail.com">
                     Email
                 </Link>
             </li>
         </ul>
     </nav>
-    <div className={styles.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
-        Menu
+    <div className={styles.menuButton}>
+        <button onClick={() => setMenuOpen(!menuOpen)} type="button">{menuOpen ? "Close" : "Menu"}</button>
     </div>
     </>
 )};

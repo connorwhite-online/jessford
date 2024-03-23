@@ -1,0 +1,58 @@
+.title {
+    align-self: center;
+    font-size: 36px;
+}
+
+.nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    justify-content: space-evenly;
+    width: 95dvw;
+    height: 95dvh;
+    padding: 2.5dvh 2.5dvw;
+    background-color: white;
+    z-index: 100;
+}
+
+.subNav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.navLink {
+    font-family: var(--montreal-regular);
+    font-size: 24px;
+}
+.navLinkActive {
+    font-family: var(--montreal-bold);
+    font-size: 24px;
+}
+
+.menuButton {
+    position: fixed;
+    display: flex;
+    bottom: 20px;
+    width: 100dvw;
+    justify-content: center;
+    z-index: 101;
+}
+
+.menuButton button {
+    text-decoration: none;
+    border: none;
+    font-family: var(--montreal-regular);
+    padding: 5px 35px;
+    background-color: black;
+    align-self: center;
+    color: white;
+    border-radius: 5px;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+@media screen and (min-width: 768px) {
+    .menuButton {
+        display: none;
+    }
+}

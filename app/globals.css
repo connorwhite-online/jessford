@@ -1,3 +1,32 @@
+@font-face {
+    font-family: 'Montreal-Regular';
+    src: url('./fonts/PPNeueMontreal-Regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montreal-Bold';
+    src: url('./fonts/PPNeueMontreal-Bold.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montreal-Light';
+    src: url('./fonts/PPNeueMontreal-Light.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Montreal-Italic';
+    src: url('./fonts/PPNeueMontreal-Italic.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Eiko';
+    src: url('./fonts/PPEiko-LightItalic.woff2') format('woff2');
+}
+
+:root {
+    --montreal-regular: 'Montreal-Regular';
+    --montreal-bold: 'Montreal-Bold';
+    --montreal-light: 'Montreal-Light';
+    --montreal-italic: 'Montreal-Italic';
+    --eiko: 'Eiko';
+}
+
 html, body {
     margin: 0px;
     padding: 0px;
@@ -6,7 +35,8 @@ html, body {
 }
 
 h1 {
-
+    font-family: var(--eiko);
+    font-size: 24px;
 }
 
 p {
@@ -16,6 +46,7 @@ p {
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
@@ -29,7 +60,7 @@ a {
 
 @media screen and (min-width: 768px) {
   h1 {
-
+    font-size: 36px;
   }
 
   p {
