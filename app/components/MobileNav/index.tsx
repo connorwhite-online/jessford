@@ -5,49 +5,58 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import styles from "./mobile-nav.module.css";
+import TextPlugin from "gsap/TextPlugin";
+gsap.registerPlugin(TextPlugin);
 
 export default function MobileNav() {
+
 const pathname = usePathname();
 
 const [menuOpen, setMenuOpen] = useState(false);
 const navRef = React.useRef<HTMLDivElement>(null);
+const buttonRef = React.useRef<HTMLButtonElement>(null);
+const mobileMenuTL = React.useRef<gsap.core.Timeline | null>(null);
 
+// Create a timeline that animates the mobile menu
 useGSAP(() => {
+    mobileMenuTL.current = gsap.timeline({ paused: true })
 
-    let title = gsap.utils.toArray(navRef.current?.children[0]);
-    let subNavItems = gsap.utils.toArray(navRef.current?.children[1].children);
-    console.log(subNavItems);
-    
-    const MenuTl = gsap.timeline({ paused: true });
-    MenuTl.fromTo(navRef.current, {
-        display: "none",
-    }, {
-        display: "flex",
-    });
-    MenuTl.fromTo(title, {
+    .to(buttonRef.current, {
+        color: 'black', 
+        backgroundColor: "white", 
+        text: "Close", 
+        duration: 0.5
+    })
+    .set(`.${styles.nav}`, {
+        display: "flex"
+    })
+    .from(`.${styles.nav}`, {
+        clipPath: "inset(100% 0 0 0)", 
+        duration: 0.75, 
+        ease: "power4.out"
+    })
+    .from(`.${styles.title}`, {
         opacity: 0,
-        duration: 1,
-    }, {
-        opacity: 1,
-        duration: 1,
-    });
-    MenuTl.fromTo(subNavItems, {
-        opacity: 0,
-        y: 25,
-        duration: 1,
-    }, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        stagger: 0.1,
-    });
+        duration: 0.5
+    })
+    .from(`.${styles.navLink}, .${styles.navLinkActive}`, {
+        opacity: 0, 
+        y: 25, 
+        // rotateZ: -2.5, 
+        duration: 0.5, 
+        stagger: 0.1, 
+        ease: "power4.out"
+    }, "<")
+}, { scope: navRef });
 
-    menuOpen ? MenuTl.play() : MenuTl.reverse();
-}, [menuOpen]);
+// Run the timeline when the menuOpen state changes
+useGSAP(() => {
+    menuOpen ? mobileMenuTL.current?.play() || console.log("played") : mobileMenuTL.current?.reverse() || console.log("reversed");
+}, { dependencies: [menuOpen] });
 
 return (
-    <>
-    <nav className={styles.nav} ref={navRef}>
+    <main ref={navRef}>
+    <nav className={styles.nav}>
         <h1 className={styles.title}>Jess Ford</h1>
         <ul className={styles.subNav}>
             <li>
@@ -71,7 +80,7 @@ return (
                 </Link>
             </li>
         </ul>
-        <ul className={styles.subNav}>
+        <ul className={styles.socials}>
             <li>
                 <Link className={styles.navLink} href="https://www.instagram.com/jessford.care" target="_blank">
                     Instagram
@@ -85,7 +94,7 @@ return (
         </ul>
     </nav>
     <div className={styles.menuButton}>
-        <button onClick={() => setMenuOpen(!menuOpen)} type="button">{menuOpen ? "Close" : "Menu"}</button>
+        <button ref={buttonRef} onClick={() => setMenuOpen(!menuOpen)} type="button">Menu</button>
     </div>
-    </>
+    </main>
 )};

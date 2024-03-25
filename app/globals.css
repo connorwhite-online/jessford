@@ -35,6 +35,16 @@ html, body {
     box-sizing: border-box;
 }
 
+header {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+    font-family: var(--montreal-light);
+    font-size: 16px;
+    background-color: white;
+    padding: 10px
+}
+
 h1 {
     font-family: var(--eiko);
     font-size: 24px;
@@ -67,5 +77,8 @@ a {
 
   p {
 
+  }
+  header {
+    display: none;
   }
 }
