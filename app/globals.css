@@ -28,15 +28,17 @@
 }
 
 html, body {
-    margin: 0px;
-    padding: 0px;
-    width: 100dvw;
-    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    min-width: 100dvw;
+    min-height: 100dvh;
+    box-sizing: border-box;
 }
 
 h1 {
     font-family: var(--eiko);
     font-size: 24px;
+    margin-top: 0;
 }
 
 p {

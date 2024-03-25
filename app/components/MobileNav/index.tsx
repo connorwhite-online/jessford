@@ -12,16 +12,34 @@ const pathname = usePathname();
 const [menuOpen, setMenuOpen] = useState(false);
 const navRef = React.useRef<HTMLDivElement>(null);
 
-// let menuItems = gsap.utils.toArray(navRef);
-// console.log(menuItems);
-
 useGSAP(() => {
+
+    let title = gsap.utils.toArray(navRef.current?.children[0]);
+    let subNavItems = gsap.utils.toArray(navRef.current?.children[1].children);
+    console.log(subNavItems);
     
     const MenuTl = gsap.timeline({ paused: true });
     MenuTl.fromTo(navRef.current, {
         display: "none",
     }, {
         display: "flex",
+    });
+    MenuTl.fromTo(title, {
+        opacity: 0,
+        duration: 1,
+    }, {
+        opacity: 1,
+        duration: 1,
+    });
+    MenuTl.fromTo(subNavItems, {
+        opacity: 0,
+        y: 25,
+        duration: 1,
+    }, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.1,
     });
 
     menuOpen ? MenuTl.play() : MenuTl.reverse();
