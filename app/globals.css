@@ -36,7 +36,7 @@ html, body {
 }
 
 header {
-    position: sticky;
+    /* position: sticky; */
     display: flex;
     justify-content: center;
     font-family: var(--montreal-light);
@@ -48,11 +48,28 @@ header {
 h1 {
     font-family: var(--eiko);
     font-size: 24px;
-    margin-top: 0;
+    /* margin: 0; */
+}
+
+h2 {
+    font-family: var(--montreal-bold);
+    font-size: 16px;
+    /* margin: 0; */
 }
 
 p {
+    font-family: var(--montreal-regular);
+    font-size: 14px;
+    /* margin-top: 0; */
+}
 
+hr {
+    height: 1px;
+    width: 100%;
+    background-color: black;
+    border: none;
+    border-radius: 1px;
+    /* margin: 0; */
 }
 
 ul {
