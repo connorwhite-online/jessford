@@ -1,0 +1,64 @@
+.main {
+
+}
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.offering {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown{
+    float: right;
+    cursor: pointer;
+}
+
+.title {
+
+}
+
+.intro{
+    /* display: none; */
+}
+
+.detailsButton {
+    font-family: var(--montreal-bold);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20vh 5vw 5vh 5vw;
+  }
+  .textContainer {
+    width: 40vw;
+    overflow: scroll;
+    gap: 5dvh;
+  }
+  .title {
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  .detailsButton {
+
+  }
+  .imgContainer {
+    align-self: flex-start;
+    order: 2;
+    padding: 0;
+    width: auto;
+  }
+    .imgContainer img {
+        width: 30vw;
+        height: auto;
+    }
+}

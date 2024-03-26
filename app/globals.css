@@ -47,6 +47,7 @@ header {
 
 h1 {
     font-family: var(--eiko);
+    font-weight: lighter;
     font-size: 24px;
     margin: 0;
 }
