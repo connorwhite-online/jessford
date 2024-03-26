@@ -108,7 +108,7 @@ export default function Offerings() {
             {Offerings.map((offering, index) => (
                 <div className={styles.offering}>
                     <h1 className={styles.title} key={index} onClick={() => toggleOpen(index)}>
-                        {offering.title}<span className={styles.dropdown}>+</span>
+                        {offering.title}<span className={styles.dropdown}>{openIndex === index ? "-" : "+"}</span>
                     </h1>
                     {openIndex === index && (
                         <p className={styles.intro}>
