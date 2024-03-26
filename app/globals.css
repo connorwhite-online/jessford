@@ -48,28 +48,27 @@ header {
 h1 {
     font-family: var(--eiko);
     font-size: 24px;
-    /* margin: 0; */
+    margin: 0;
 }
 
 h2 {
     font-family: var(--montreal-bold);
     font-size: 16px;
-    /* margin: 0; */
+    margin: 0;
 }
 
 p {
     font-family: var(--montreal-regular);
     font-size: 14px;
-    /* margin-top: 0; */
+    margin-top: 0;
 }
 
 hr {
     height: 1px;
     width: 100%;
     background-color: black;
-    border: none;
-    border-radius: 1px;
-    /* margin: 0; */
+    border: 0;
+    margin: 5px 0 25px 0;
 }
 
 ul {
@@ -93,7 +92,7 @@ a {
   }
 
   p {
-
+    font-size: 16px;
   }
   header {
     display: none;

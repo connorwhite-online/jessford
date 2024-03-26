@@ -24,7 +24,10 @@ useGSAP(() => {
     .to(buttonRef.current, {
         color: 'black', 
         backgroundColor: "white", 
-        text: "Close", 
+        text: {
+            value: "Close",
+            type: "diff"
+        }, 
         duration: 0.5
     })
     .set(`.${styles.nav}`, {
