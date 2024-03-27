@@ -25,6 +25,8 @@
     --montreal-light: 'Montreal-Light';
     --montreal-italic: 'Montreal-Italic';
     --eiko: 'Eiko';
+    --color-dark: black;
+    --color-light: white;
 }
 
 html, body {
@@ -41,7 +43,7 @@ header {
     justify-content: center;
     font-family: var(--montreal-light);
     font-size: 16px;
-    background-color: white;
+    background-color: var(--color-light);
     padding: 10px
 }
 
@@ -50,49 +52,61 @@ h1 {
     font-weight: lighter;
     font-size: 24px;
     margin: 0;
+    color: var(--color-dark);
 }
 
 h2 {
     font-family: var(--montreal-bold);
     font-size: 16px;
     margin: 0;
+    color: var(--color-dark);
 }
 
 p {
     font-family: var(--montreal-regular);
     font-size: 14px;
     margin-top: 0;
+    color: var(--color-dark);
 }
 
 hr {
     height: 1px;
     width: 100%;
-    background-color: black;
+    background-color: var(--color-dark);
     border: 0;
     margin: 5px 0 25px 0;
 }
 
-ul {
+menu {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
+ul {
+    list-style-type: circle;
+}
+
 li {
-    list-style: none;
+    font-family: var(--montreal-regular);
+    font-size: 14px;
+    margin: 0;
+    color: var(--color-dark);
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: var(--color-dark);
 }
 
 @media screen and (min-width: 768px) {
   h1 {
     font-size: 36px;
   }
-
   p {
+    font-size: 16px;
+  }
+  li {
     font-size: 16px;
   }
   header {

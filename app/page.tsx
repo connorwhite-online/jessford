@@ -59,11 +59,16 @@ export default function Home() {
 
   const aboutRef = useRef<HTMLDivElement>(null);
   const aboutTLIntro = useRef<gsap.core.Timeline>();
-  const aboutTLOutro = useRef<gsap.core.Timeline>();
+  // const aboutTLOutro = useRef<gsap.core.Timeline>();
 
   useGSAP(() => {
     aboutTLIntro.current = gsap.timeline()
-    .to(aboutRef.current, {autoAlpha: 1})
+    .set(aboutRef.current, {autoAlpha: 1})
+    .from("header", {
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power4.out'
+    })
     .from(`.${styles.imgContainer}`, { 
       opacity: 0, 
       clipPath: 'inset(0 0 100% 0)', 
@@ -98,7 +103,7 @@ export default function Home() {
       <header>about</header>
       <main className={styles.content}>
         <section className={styles.imgContainer}>
-          <Image src={heroImage} alt="Jess Ford" height={263} width={223} />
+          <Image src={heroImage} alt="Jess Ford" height={263} width={223} priority />
         </section>
         <section className={styles.textContainer}>
           <div>

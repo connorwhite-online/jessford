@@ -52,16 +52,22 @@ useGSAP(() => {
     }, "<")
 }, { scope: navRef });
 
-// Run the timeline when the menuOpen state changes
+// Open the menu at 1x speed, close at 2x speed
 useGSAP(() => {
-    menuOpen ? mobileMenuTL.current?.play() || console.log("played") : mobileMenuTL.current?.reverse() || console.log("reversed");
+    if (menuOpen) {
+        mobileMenuTL.current?.timeScale(1);
+        mobileMenuTL.current?.play();
+    } else {
+        mobileMenuTL.current?.timeScale(2);
+        mobileMenuTL.current?.reverse();
+    }
 }, { dependencies: [menuOpen] });
 
 return (
     <main ref={navRef}>
     <nav className={styles.nav}>
         <h1 className={styles.title}>Jess Ford</h1>
-        <ul className={styles.subNav}>
+        <menu className={styles.subNav}>
             <li>
                 <Link href="/" onClick={() => setMenuOpen(false)} className={`link ${pathname === '/' ? styles.navLinkActive : styles.navLink}`}>
                     Info
@@ -82,8 +88,8 @@ return (
                     Connect
                 </Link>
             </li>
-        </ul>
-        <ul className={styles.socials}>
+        </menu>
+        <menu className={styles.socials}>
             <li>
                 <Link className={styles.navLink} href="https://www.instagram.com/jessford.care" target="_blank">
                     Instagram
@@ -94,7 +100,7 @@ return (
                     Email
                 </Link>
             </li>
-        </ul>
+        </menu>
     </nav>
     <div className={styles.menuButton}>
         <button ref={buttonRef} onClick={() => setMenuOpen(!menuOpen)} type="button">Menu</button>

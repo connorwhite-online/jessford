@@ -14,7 +14,7 @@ const navRef = React.useRef<HTMLDivElement>(null);
 return (
     <>
     <nav className={styles.nav} ref={navRef}>
-        <ul className={styles.subNav}>
+        <menu className={styles.subNav}>
             <li>
                 <Link href="/" className={`link ${pathname === '/' ? styles.navLinkActive : styles.navLink}`}>
                     Info
@@ -35,8 +35,8 @@ return (
                     Connect
                 </Link>
             </li>
-        </ul>
-        <ul className={styles.subNav}>
+        </menu>
+        <menu className={styles.subNav}>
             <li>
                 <Link className={styles.navLink} href="https://www.instagram.com/jessford.care" target="_blank">
                     Instagram
@@ -47,7 +47,7 @@ return (
                     Email
                 </Link>
             </li>
-        </ul>
+        </menu>
     </nav>
     </>
 )};

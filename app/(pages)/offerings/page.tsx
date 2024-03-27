@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, use } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
@@ -7,6 +7,7 @@ import birth from "../../../public/birth.png";
 import postpartum from "../../../public/postpartum.png";
 import perinatalLoss from "../../../public/perinatal-loss.png";
 import styles from "./offerings.module.css";
+import { off } from "process";
 
 export default function Offerings() {
 
@@ -89,27 +90,110 @@ export default function Offerings() {
     ]
 
     const offeringRef = useRef<HTMLDivElement>(null);
+    const offeringTLIntro = useRef<gsap.core.Timeline>();
+    const offeringIndexTL = useRef<gsap.core.Timeline>();
+    const offeringDetailsTL = useRef<gsap.core.Timeline>();
+    const [initialIndex, setInitialIndex] = useState<number | null>(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(initialIndex);
+    const [detailsOpenIndex, setDetailsOpenIndex] = useState<number | null>(null);
 
-    const [openIndex, setOpenIndex] = useState(0);
-    const [detailsOpenIndex, setDetailsOpenIndex] = useState(null);
-
-    const toggleOpen = (index) => {
-        setOpenIndex(index);
-        setDetailsOpenIndex(null);
+    const toggleOpen = (index: number) => {
+            setOpenIndex(index);
+            setDetailsOpenIndex(null);
+    };
+    
+    const toggleDetails = (index: number) => {
+        setDetailsOpenIndex(detailsOpenIndex === index ? null : index);
     };
 
-    const toggleDetails = (index) => {
-        setDetailsOpenIndex(index);
-    }
+    // Animate component in
+    useGSAP(() => {
+        offeringTLIntro.current = gsap.timeline()
+        .set(offeringRef.current, {autoAlpha: 1})
+        .from("header", {
+            opacity: 0,
+            duration: 1.5,
+            ease: 'power4.out'
+          })
+        .from(`.${styles.imgContainer}`, { 
+          opacity: 0, 
+          clipPath: 'inset(0 0 100% 0)', 
+          duration: 2,
+          ease: 'power4.out',
+        }, "<")
+        .from("h1", {
+          opacity: 0,
+          y: 25,
+          clipPath: 'inset(0 0 100% 0)',
+          duration: 1.5,
+          ease: 'power4.out',
+          stagger: 0.5,
+        }, "<")
+        .from("hr", {
+          clipPath: 'inset(0 100% 0 0)',
+          duration: 1,
+          ease: 'power4.out',
+          stagger: 0.5,
+        }, "<")
+        .from("p", {
+          opacity: 0,
+          duration: 4,
+          ease: 'power4.out',
+          stagger: 0.1,
+        }, "<25%")
+        .from(`.${styles.detailsButton}`, {
+            opacity: 0,
+            duration: 5,
+            ease: 'power4.out',
+          }, "<")
+      }, {scope: offeringRef})
+
+      useGSAP((index) => {
+        if (openIndex === initialIndex) return;
+        offeringIndexTL.current = gsap.timeline()
+        .from(`.${styles.intro}`, {
+            opacity: 0,
+            duration: 1,
+            ease: 'power4.out',
+            stagger: 0.5,
+          })
+          .from(`.${styles.detailsButton}`, {
+            opacity: 0,
+            duration: 2,
+            ease: 'power4.out',
+          }, "<")
+          .from(`.${styles.imgContainer}`, {
+            opacity: 0,
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 2,
+            ease: 'power4.out',
+          }, "<")
+          setInitialIndex(Offerings.length +1);
+      }, {scope: offeringRef, dependencies: [openIndex]})
+
+      useGSAP(() => {
+        if (detailsOpenIndex === null) return;
+        offeringDetailsTL.current = gsap.timeline()
+        .from("li", {
+            opacity: 0,
+            duration: 1,
+            x: 25,
+            ease: 'power4.out',
+            stagger: 0.05,
+          })
+      }, {scope: offeringRef, dependencies: [detailsOpenIndex]})
 
     return (
+    <>
+    <header>offerings</header>
     <main className={styles.main} ref={offeringRef}>
         <section className={styles.textContainer}>
             {Offerings.map((offering, index) => (
-                <div className={styles.offering}>
+                <div key={index} className={styles.offering}>
                     <h1 className={styles.title} key={index} onClick={() => toggleOpen(index)}>
                         {offering.title}<span className={styles.dropdown}>{openIndex === index ? "-" : "+"}</span>
                     </h1>
+                    <hr />
                     {openIndex === index && (
                         <p className={styles.intro}>
                             {offering.intro}
@@ -117,7 +201,7 @@ export default function Offerings() {
                     )}
                     {openIndex === index && (
                         <div className={styles.detailsButton} onClick={() => toggleDetails(index)}>
-                            + view more details
+                           {detailsOpenIndex !== null && detailsOpenIndex === index ? "- collapse details" : "+ view more details"}
                         </div>
                     )}
                         {detailsOpenIndex === index && (
@@ -133,9 +217,10 @@ export default function Offerings() {
         <section className={styles.imgContainer}>
         {Offerings.map((offering, index) => (
                     openIndex === index && (
-                        <Image key={index} src={offering.url} alt={offering.title} width={426.85} height={503} />
+                        <Image key={index} src={offering.url} alt={offering.title} width={426.85} height={503} priority />
                     )
                 ))}
         </section>
     </main>
+    </>
 )};
