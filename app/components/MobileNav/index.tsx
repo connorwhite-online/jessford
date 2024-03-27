@@ -32,12 +32,12 @@ useGSAP(() => {
     })
     .set(`.${styles.nav}`, {
         display: "flex"
-    })
+    }, "<")
     .from(`.${styles.nav}`, {
         clipPath: "inset(100% 0 0 0)", 
         duration: 0.75, 
         ease: "power4.out"
-    })
+    }, "<")
     .from(`.${styles.title}`, {
         opacity: 0,
         duration: 0.5
