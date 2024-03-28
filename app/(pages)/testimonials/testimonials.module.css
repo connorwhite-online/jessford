@@ -10,7 +10,7 @@
     padding: 5dvh 2.5dvw;
 }
 .bar {
-    width: 40dvw;
+    width: 200px;
     height: 24px;
     border: 1px solid var(--color-dark);
     border-radius: 2.5dvh;
@@ -27,6 +27,7 @@
     background-color: var(--color-dark);
     z-index: 2;
 }
+
 .testimonial div {
     display: flex;
     flex-direction: column;
@@ -55,29 +56,37 @@
     scroll-snap-align: start;
 }
 
+.testimonial div p {
+    font-family: var(--montreal-bold);
+}
+
 @media screen and (min-width: 768px) {
     .sliderControl {
         width: 90dvw;
-        justify-content: center;
-        gap: 10dvw;
+        padding: 5dvh 5dvw;
+        justify-content: flex-start;
+        gap: 5dvw;
     }
     .bar {
-        width: 20dvw;
+        width: 200px;
     }
     .testimonial div {
         flex-direction: row;
         justify-content: space-between;
         align-items: baseline;
     }
-    .testimonial div h1, .article div p {
-        width: 50%;
+    .testimonial div h1 {
+        width: 70%;
+    }
+    .article div p {
+        width: 30%;
     }
     .testimonials {
         flex-direction: row;
         /* gap: 5dvh; */
     }
     .testimonial {
-        width: 60dvw;
+        width: 50dvw;
         padding: 5dvh 5dvw;
         /* gap: 1dvh; */
     }

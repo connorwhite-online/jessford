@@ -47,18 +47,20 @@ export default function Testimonials() {
     const testimonialsRef = useRef<HTMLDivElement>(null);
 
     const handleSlider = (e: React.MouseEvent<HTMLDivElement>) => {
-        var testimonialsArray = Testimonials.length;
-        var testimonialsWidth = testimonialsRef.current?.scrollWidth;
-        var maxScroll = testimonialsWidth - testimonialsRef.current?.clientWidth;
-        var scrollProgress = testimonialsRef.current?.scrollLeft;
-        var division = scrollProgress / maxScroll;
-        setScrollPosition(division * 100);
-        console.log(division * 100);
+        // var testimonialsArray = Testimonials.length;
+        let testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
+        let maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
+        let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
+        let percentage = (scrollProgress / maxScroll) * 176;
+        setScrollPosition(percentage);
+        console.log(scrollPosition);
     }
 
+    // Slider Animation 
     useGSAP(() => {
         gsap.set(sliderRef.current, {
-            left: scrollPosition + "%",
+            // left: `${Math.min(scrollPosition, 100)}px`,
+            left: scrollPosition + "px",
             // duration: 0.1
         })
     }, {dependencies: [scrollPosition, sliderPosition]})
