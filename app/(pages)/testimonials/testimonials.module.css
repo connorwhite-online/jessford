@@ -1,6 +1,85 @@
+.main {
+    visibility: hidden;
+}
 
-.article div {
+.sliderControl {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    width: 95dvw;
+    padding: 5dvh 2.5dvw;
+}
+.bar {
+    width: 40dvw;
+    height: 24px;
+    border: 1px solid var(--color-dark);
+    border-radius: 2.5dvh;
+    z-index: 1;
+    position: relative;
+}
+.slider {
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    /* left: 100%; */
+    position: absolute;
+    border-radius: 2.5dvw;
+    background-color: var(--color-dark);
+    z-index: 2;
+}
+.testimonial div {
     display: flex;
     flex-direction: column;
-    gap: 5dvh;
+    justify-content: flex-start;
+    /* gap: 5dvh; */
+}
+
+.testimonials {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: none;
+    /* width: 95dvw; */
+    
+    gap: 5dvw;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+}
+
+.testimonial {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    /* gap: 2.5dvh; */
+    width: 95dvw;
+    padding: 5dvh 2.5dvw;
+    scroll-snap-align: start;
+}
+
+@media screen and (min-width: 768px) {
+    .sliderControl {
+        width: 90dvw;
+        justify-content: center;
+        gap: 10dvw;
+    }
+    .bar {
+        width: 20dvw;
+    }
+    .testimonial div {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+    .testimonial div h1, .article div p {
+        width: 50%;
+    }
+    .testimonials {
+        flex-direction: row;
+        /* gap: 5dvh; */
+    }
+    .testimonial {
+        width: 60dvw;
+        padding: 5dvh 5dvw;
+        /* gap: 1dvh; */
+    }
+    
 }

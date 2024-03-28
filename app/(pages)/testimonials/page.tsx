@@ -1,4 +1,7 @@
-import React, { useState, useRef } from "react"
+'use client';
+import React, { useState, useRef, use } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import styles from "./testimonials.module.css"
 
 export default function Testimonials() {
@@ -36,15 +39,94 @@ export default function Testimonials() {
         }
     ];
 
-    return (
-    <>
-    <header>testimonials</header>
-    <section>
+    const ref = useRef<HTMLDivElement>(null);
+    const testimonialTL = useRef<gsap.core.Timeline>();
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [sliderPosition, setSliderPosition] = useState(0);
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const testimonialsRef = useRef<HTMLDivElement>(null);
 
+    const handleSlider = (e: React.MouseEvent<HTMLDivElement>) => {
+        var testimonialsArray = Testimonials.length;
+        var testimonialsWidth = testimonialsRef.current?.scrollWidth;
+        var maxScroll = testimonialsWidth - testimonialsRef.current?.clientWidth;
+        var scrollProgress = testimonialsRef.current?.scrollLeft;
+        var division = scrollProgress / maxScroll;
+        setScrollPosition(division * 100);
+        console.log(division * 100);
+    }
+
+    useGSAP(() => {
+        gsap.set(sliderRef.current, {
+            left: scrollPosition + "%",
+            // duration: 0.1
+        })
+    }, {dependencies: [scrollPosition, sliderPosition]})
+
+    // Loading Animations
+    useGSAP(() => {
+        testimonialTL.current = gsap.timeline()
+        .set(ref.current, {autoAlpha: 1})
+        .from("header", {
+            opacity: 0,
+            duration: 1.5,
+            ease: 'power4.out'
+          })
+          .from(`.${styles.bar}`, {
+            scaleX: 0.25,
+            opacity: 0,
+            duration: 1,
+            ease: 'power4.out',
+          }, "<")
+          .from(`.${styles.slider}`, {
+            opacity: 0,
+            duration: 1.5,
+            ease: 'power4.out',
+          }, "<50%")
+          .from("h1", {
+            opacity: 0,
+            y: 25,
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 1.5,
+            ease: 'power4.out',
+            stagger: 0.5,
+          }, "<")
+          .from("hr", {
+            clipPath: 'inset(0 100% 0 0)',
+            duration: 1,
+            ease: 'power4.out',
+            stagger: 0.5,
+          }, "<")
+          .from("p", {
+            opacity: 0,
+            duration: 4,
+            ease: 'power4.out',
+            stagger: 0.1,
+          }, "<25%")
+    }, {scope: ref})
+
+    return (
+    <main ref={ref} className={styles.main}>
+    <header>testimonials</header>
+    <section className={styles.sliderControl}>
+        <div className={styles.bar}>
+            <div 
+            className={styles.slider} 
+            ref={sliderRef} 
+            onDrag={handleSlider}
+            >
+
+            </div>
+        </div>
+        <p>slide or swipe</p>
     </section>
-    <section className={styles.testimonials}>
+    <section 
+        className={styles.testimonials} 
+        ref={testimonialsRef} 
+        onScroll={handleSlider}
+    >
         {Testimonials.map((testimonial, index) => (
-            <article key={index}>
+            <article key={index} className={styles.testimonial} >
                 <div>
                     <h1>{testimonial.service}</h1>
                     <p>{testimonial.relation}, {testimonial.location}</p>
@@ -56,5 +138,5 @@ export default function Testimonials() {
             </article>
         ))}
     </section>
-    </>
+    </main>
 )};
