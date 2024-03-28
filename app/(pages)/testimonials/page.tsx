@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, use } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import styles from "./testimonials.module.css"
@@ -41,29 +41,45 @@ export default function Testimonials() {
 
     const ref = useRef<HTMLDivElement>(null);
     const testimonialTL = useRef<gsap.core.Timeline>();
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [sliderPosition, setSliderPosition] = useState(0);
+    const [scrollPosition, setScrollPosition] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
     const testimonialsRef = useRef<HTMLDivElement>(null);
 
-    const handleSlider = (e: React.MouseEvent<HTMLDivElement>) => {
-        // var testimonialsArray = Testimonials.length;
+    const handleSlider = () => {
+        let sliderRange = 176;
         let testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
         let maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
         let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
-        let percentage = (scrollProgress / maxScroll) * 176;
-        setScrollPosition(percentage);
-        console.log(scrollPosition);
+        let percentage = (scrollProgress / maxScroll) * sliderRange;
+        setSliderPosition(percentage);
+        console.log(sliderPosition);
     }
+
+    // const handleDrag = () => {
+    //     let sliderRange = 176;
+    //     let testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
+    //     let maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
+    //     let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
+    //     let percentage = maxScroll / sliderRange;
+    //     setScrollPosition(percentage);
+    //     console.log(scrollPosition);
+    // }
 
     // Slider Animation 
     useGSAP(() => {
         gsap.set(sliderRef.current, {
             // left: `${Math.min(scrollPosition, 100)}px`,
-            left: scrollPosition + "px",
+            left: sliderPosition + "px",
             // duration: 0.1
         })
-    }, {dependencies: [scrollPosition, sliderPosition]})
+    }, {dependencies: [sliderPosition]})
+
+    // Scrolling Animation
+    // useEffect(() => {
+    //     testimonialsRef.current!.scrollLeft += scrollPosition;
+    //     console.log("trying to drag")
+    // }, [scrollPosition])
 
     // Loading Animations
     useGSAP(() => {
@@ -101,7 +117,7 @@ export default function Testimonials() {
           }, "<")
           .from("p", {
             opacity: 0,
-            duration: 4,
+            duration: 2,
             ease: 'power4.out',
             stagger: 0.1,
           }, "<25%")
@@ -115,7 +131,7 @@ export default function Testimonials() {
             <div 
             className={styles.slider} 
             ref={sliderRef} 
-            onDrag={handleSlider}
+            // onDrag={handleDrag}
             >
 
             </div>
