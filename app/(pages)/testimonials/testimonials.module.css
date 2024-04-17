@@ -40,7 +40,6 @@
     flex-direction: row;
     flex-shrink: none;
     /* width: 95dvw; */
-    
     gap: 5dvw;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;

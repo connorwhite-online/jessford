@@ -56,16 +56,6 @@ export default function Testimonials() {
         console.log(sliderPosition);
     }
 
-    // const handleDrag = () => {
-    //     let sliderRange = 176;
-    //     let testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
-    //     let maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
-    //     let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
-    //     let percentage = maxScroll / sliderRange;
-    //     setScrollPosition(percentage);
-    //     console.log(scrollPosition);
-    // }
-
     // Slider Animation 
     useGSAP(() => {
         gsap.set(sliderRef.current, {
@@ -74,12 +64,6 @@ export default function Testimonials() {
             // duration: 0.1
         })
     }, {dependencies: [sliderPosition]})
-
-    // Scrolling Animation
-    // useEffect(() => {
-    //     testimonialsRef.current!.scrollLeft += scrollPosition;
-    //     console.log("trying to drag")
-    // }, [scrollPosition])
 
     // Loading Animations
     useGSAP(() => {
