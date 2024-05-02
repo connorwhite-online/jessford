@@ -27,7 +27,26 @@
     background-color: var(--color-dark);
     z-index: 2;
 }
-
+.range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 24px;
+    border: 1px solid var(--color-dark);
+    border-radius: 2.5dvh;
+    z-index: 1;
+}
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 2.5dvw;
+    background-color: var(--color-dark);
+    z-index: 2;
+}
 .testimonial div {
     display: flex;
     flex-direction: column;

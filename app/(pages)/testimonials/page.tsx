@@ -42,6 +42,7 @@ export default function Testimonials() {
     const ref = useRef<HTMLDivElement>(null);
     const testimonialTL = useRef<gsap.core.Timeline>();
     const [sliderPosition, setSliderPosition] = useState(0);
+    const [rangeValue, setRangeValue] = useState(0);
     const [scrollPosition, setScrollPosition] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
     const testimonialsRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,29 @@ export default function Testimonials() {
         setSliderPosition(percentage);
         console.log(sliderPosition);
     }
+
+    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = parseInt(event.target.value, 10);
+        setRangeValue(newValue);
+        scrollToPosition(newValue);
+    };
+
+    const scrollToPosition = (index: number) => {
+        if (testimonialsRef.current) {
+            const testimonialsWidth = testimonialsRef.current.clientWidth;
+            const scrollX = index * testimonialsWidth;
+            testimonialsRef.current.scrollLeft = scrollX;
+        }
+    };
+
+    const handleTestimonialsScroll = () => {
+        if (testimonialsRef.current) {
+            const testimonialsWidth = testimonialsRef.current.clientWidth;
+            const scrollX = testimonialsRef.current.scrollLeft;
+            const newIndex = Math.round(scrollX / testimonialsWidth);
+            setRangeValue(newIndex);
+        }
+    };
 
     // Slider Animation 
     useGSAP(() => {
@@ -111,21 +135,22 @@ export default function Testimonials() {
     <main ref={ref} className={styles.main}>
     <header>testimonials</header>
     <section className={styles.sliderControl}>
-        <div className={styles.bar}>
+        {/* <div className={styles.bar}>
             <div 
             className={styles.slider} 
             ref={sliderRef} 
             // onDrag={handleDrag}
             >
-
             </div>
-        </div>
+        </div> */}
+        <input type="range" min="0" max={Testimonials.length - 1} value={rangeValue} className={styles.range} onChange={handleSliderChange}/>
         <p>slide or swipe</p>
     </section>
     <section 
         className={styles.testimonials} 
         ref={testimonialsRef} 
-        onScroll={handleSlider}
+        // onScroll={handleSlider}
+        onScroll={handleTestimonialsScroll}
     >
         {Testimonials.map((testimonial, index) => (
             <article key={index} className={styles.testimonial} >
