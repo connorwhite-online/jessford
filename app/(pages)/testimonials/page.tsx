@@ -39,13 +39,16 @@ export default function Testimonials() {
         }
     ];
 
+    // Setup Refs
     const ref = useRef<HTMLDivElement>(null);
     const testimonialTL = useRef<gsap.core.Timeline>();
-    const [sliderPosition, setSliderPosition] = useState(0);
-    const [rangeValue, setRangeValue] = useState(0);
-    const [scrollPosition, setScrollPosition] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
     const testimonialsRef = useRef<HTMLDivElement>(null);
+
+    // Setup State
+    const [sliderPosition, setSliderPosition] = useState(0);
+    // const [rangeValue, setRangeValue] = useState(0);
+    // const [scrollPosition, setScrollPosition] = useState(0);
 
     const handleSlider = () => {
         let sliderRange = 176;
@@ -57,28 +60,33 @@ export default function Testimonials() {
         console.log(sliderPosition);
     }
 
-    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value, 10);
-        setRangeValue(newValue);
-        scrollToPosition(newValue);
-    };
+    const handleTouch = (event: React.TouchEvent<HTMLDivElement>) => {console.log(event)}
 
-    const scrollToPosition = (index: number) => {
-        if (testimonialsRef.current) {
-            const testimonialsWidth = testimonialsRef.current.clientWidth;
-            const scrollX = index * testimonialsWidth;
-            testimonialsRef.current.scrollLeft = scrollX;
-        }
-    };
+    // const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const newValue = parseInt(event.target.value, 10);
+    //     setRangeValue(newValue);
+    //     scrollToPosition(newValue);
+    // };
 
-    const handleTestimonialsScroll = () => {
-        if (testimonialsRef.current) {
-            const testimonialsWidth = testimonialsRef.current.clientWidth;
-            const scrollX = testimonialsRef.current.scrollLeft;
-            const newIndex = Math.round(scrollX / testimonialsWidth);
-            setRangeValue(newIndex);
-        }
-    };
+    // const scrollToPosition = (index: number) => {
+    //     if (testimonialsRef.current) {
+    //         const testimonialsWidth = testimonialsRef.current.clientWidth;
+    //         const scrollX = index * testimonialsWidth;
+    //         testimonialsRef.current.scrollTo({
+    //             left: scrollX,
+    //             behavior: 'smooth'
+    //         });
+    //     }
+    // };
+
+    // const handleTestimonialsScroll = () => {
+    //     if (testimonialsRef.current) {
+    //         const testimonialsWidth = testimonialsRef.current.clientWidth;
+    //         const scrollX = testimonialsRef.current.scrollLeft;
+    //         const newIndex = Math.round(scrollX / testimonialsWidth);
+    //         setRangeValue(newIndex);
+    //     }
+    // };
 
     // Slider Animation 
     useGSAP(() => {
@@ -106,6 +114,8 @@ export default function Testimonials() {
           }, "<")
           .from(`.${styles.slider}`, {
             opacity: 0,
+            scale: 0.5,
+            x: 25,
             duration: 1.5,
             ease: 'power4.out',
           }, "<50%")
@@ -135,22 +145,20 @@ export default function Testimonials() {
     <main ref={ref} className={styles.main}>
     <header>testimonials</header>
     <section className={styles.sliderControl}>
-        {/* <div className={styles.bar}>
+        <div className={styles.bar}>
             <div 
             className={styles.slider} 
             ref={sliderRef} 
-            // onDrag={handleDrag}
+            onTouchStart={handleTouch}
             >
             </div>
-        </div> */}
-        <input type="range" min="0" max={Testimonials.length - 1} value={rangeValue} className={styles.range} onChange={handleSliderChange}/>
+        </div>
         <p>slide or swipe</p>
     </section>
     <section 
         className={styles.testimonials} 
         ref={testimonialsRef} 
-        // onScroll={handleSlider}
-        onScroll={handleTestimonialsScroll}
+        onScroll={handleSlider}
     >
         {Testimonials.map((testimonial, index) => (
             <article key={index} className={styles.testimonial} >
