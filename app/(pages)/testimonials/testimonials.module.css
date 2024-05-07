@@ -4,10 +4,10 @@
 
 .sliderControl {
     display: flex;
-    justify-content: space-between;
-    align-content: center;
+    align-items: center;
     width: 95dvw;
     padding: 5dvh 2.5dvw;
+    gap: 2.5dvw;
 }
 .bar {
     width: 200px;
@@ -27,25 +27,8 @@
     background-color: var(--color-dark);
     z-index: 2;
 }
-.range {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 200px;
-    height: 24px;
-    border: 1px solid var(--color-dark);
-    border-radius: 2.5dvh;
-    z-index: 1;
-}
-.range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 2.5dvw;
-    background-color: var(--color-dark);
-    z-index: 2;
+.sliderControl p {
+    margin: 0;
 }
 .testimonial div {
     display: flex;
@@ -78,12 +61,15 @@
     font-family: var(--montreal-bold);
 }
 
+.testimonial div p span {
+    font-family: var(--montreal-regular);
+}
+
 @media screen and (min-width: 768px) {
     .sliderControl {
         width: 90dvw;
         padding: 5dvh 5dvw;
         justify-content: flex-start;
-        gap: 5dvw;
     }
     .bar {
         width: 200px;

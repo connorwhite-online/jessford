@@ -1,9 +1,10 @@
 'use client';
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import styles from "./testimonials.module.css"
-// gsap.registerPlugin(Draggable) 
+import Draggable from "gsap/Draggable";
+gsap.registerPlugin(Draggable) 
 
 export default function Testimonials() {
 
@@ -45,82 +46,23 @@ export default function Testimonials() {
     const testimonialTL = useRef<gsap.core.Timeline>();
     const sliderRef = useRef<HTMLDivElement>(null);
     const testimonialsRef = useRef<HTMLDivElement>(null);
+    const percentage = useRef<number>(0);
 
     // Setup State
     const [sliderPosition, setSliderPosition] = useState(0);
-    const [scrollPosition, setScrollPosition] = useState(0);
-    // const [rangeValue, setRangeValue] = useState(0);
-    // const [scrollPosition, setScrollPosition] = useState(0);
 
+    // TEMPORARY! THIS SHOULD BE READ IN A THROTTLED FUNCTION OR LISTENER
     const sliderRange = 176;
     const testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
     const maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
 
     const handleSlider = () => {
-        // let sliderRange = 176;
-        // let testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
-        // let maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
         let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
-        let percentage = (scrollProgress / maxScroll) * sliderRange;
-        setSliderPosition(percentage);
-        console.log(sliderPosition);
+        let progress = (scrollProgress / maxScroll) * sliderRange;
+        let completion = (testimonialsRef.current!.scrollLeft / maxScroll) * 100;
+        setSliderPosition(progress);
+        percentage.current = Math.round(completion);
     }
-
-    const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {console.log(event)}
-
-    const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {console.log(event)}
-
-    const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-        console.log(event)
-        
-        // let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
-        // let sliderProgress = sliderRef.current?.offsetLeft ?? 0;
-        let comparisonRatio = maxScroll / sliderRange;
-        let percentage = (maxScroll / sliderRange) * comparisonRatio;
-        setScrollPosition(percentage);
-        
-        // scroll the testimonials container by the percentage of the slider position
-        testimonialsRef.current!.scrollLeft = scrollPosition;
-
-    }
-
-    // Draggable.create("#yourID", {
-    //     type: "y",
-    //     bounds: document.getElementById("container"),
-    //     inertia: true,
-    //     onClick: function () {
-    //       console.log("clicked");
-    //     },
-    //     onDragEnd: function () {
-    //       console.log("drag ended");
-    //     },
-    // });
-
-    // const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     const newValue = parseInt(event.target.value, 10);
-    //     setRangeValue(newValue);
-    //     scrollToPosition(newValue);
-    // };
-
-    // const scrollToPosition = (index: number) => {
-    //     if (testimonialsRef.current) {
-    //         const testimonialsWidth = testimonialsRef.current.clientWidth;
-    //         const scrollX = index * testimonialsWidth;
-    //         testimonialsRef.current.scrollTo({
-    //             left: scrollX,
-    //             behavior: 'smooth'
-    //         });
-    //     }
-    // };
-
-    // const handleTestimonialsScroll = () => {
-    //     if (testimonialsRef.current) {
-    //         const testimonialsWidth = testimonialsRef.current.clientWidth;
-    //         const scrollX = testimonialsRef.current.scrollLeft;
-    //         const newIndex = Math.round(scrollX / testimonialsWidth);
-    //         setRangeValue(newIndex);
-    //     }
-    // };
 
     // Slider Animation 
     useGSAP(() => {
@@ -182,14 +124,11 @@ export default function Testimonials() {
         <div className={styles.bar}>
             <div 
             className={styles.slider} 
-            ref={sliderRef} 
-            // onTouchStart={handleTouchStart}
-            // onTouchEnd={handleTouchEnd}
-            onTouchMove={handleTouchMove}
+            ref={sliderRef}
             >
             </div>
         </div>
-        <p>slide or swipe</p>
+        <p>{percentage.current}%</p>
     </section>
     <section 
         className={styles.testimonials} 
@@ -200,7 +139,7 @@ export default function Testimonials() {
             <article key={index} className={styles.testimonial} >
                 <div>
                     <h1>{testimonial.service}</h1>
-                    <p>{testimonial.relation}, {testimonial.location}</p>
+                    <p>{testimonial.relation}, <span>{testimonial.location}</span></p>
                 </div>
                 <hr />
                 <p>
