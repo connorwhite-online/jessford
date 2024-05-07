@@ -13,6 +13,7 @@
     width: 200px;
     height: 24px;
     border: 1px solid var(--color-dark);
+    background-color: var(--color-light);
     border-radius: 2.5dvh;
     z-index: 1;
     position: relative;
@@ -21,7 +22,6 @@
     width: 20px;
     height: 20px;
     margin: 2px;
-    /* left: 100%; */
     position: absolute;
     border-radius: 2.5dvw;
     background-color: var(--color-dark);

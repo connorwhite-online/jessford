@@ -50,6 +50,7 @@ export default function Testimonials() {
 
     // Setup State
     const [sliderPosition, setSliderPosition] = useState(0);
+    const [scrollPosition, setScrollPosition] = useState(0);
 
     // TEMPORARY! THIS SHOULD BE READ IN A THROTTLED FUNCTION OR LISTENER
     const sliderRange = 176;
@@ -62,6 +63,7 @@ export default function Testimonials() {
         let completion = (testimonialsRef.current!.scrollLeft / maxScroll) * 100;
         setSliderPosition(progress);
         percentage.current = Math.round(completion);
+        setScrollPosition(scrollProgress / maxScroll * 100)
     }
 
     // Slider Animation 
@@ -69,6 +71,7 @@ export default function Testimonials() {
         gsap.set(sliderRef.current, {
             // left: `${Math.min(scrollPosition, 100)}px`,
             left: sliderPosition + "px",
+            // backgroundColor: `rgba(0, 0, 0, ${(percentage.current * 0.01)})`
             // duration: 0.1
         })
     }, {dependencies: [sliderPosition]})
@@ -128,7 +131,7 @@ export default function Testimonials() {
             >
             </div>
         </div>
-        <p>{percentage.current}%</p>
+        {/* <p>{percentage.current}%</p> */}
     </section>
     <section 
         className={styles.testimonials} 
