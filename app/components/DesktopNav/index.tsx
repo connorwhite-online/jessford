@@ -10,6 +10,19 @@ export default function DesktopNav() {
 const pathname = usePathname();
 
 const navRef = React.useRef<HTMLDivElement>(null);
+const navTL = React.useRef<gsap.core.Timeline>();
+
+useGSAP(() => {
+    navTL.current = gsap.timeline()
+    .from("menu", {
+        opacity: 0,
+        // y: -25,
+        clipPath: 'inset(0 100% 0 0)',
+        duration: 1.5,
+        ease: 'power4.out',
+        stagger: 0.5,
+    })
+}, {scope: navRef});
 
 return (
     <>
