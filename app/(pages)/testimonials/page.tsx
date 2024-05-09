@@ -46,33 +46,25 @@ export default function Testimonials() {
     const testimonialTL = useRef<gsap.core.Timeline>();
     const sliderRef = useRef<HTMLDivElement>(null);
     const testimonialsRef = useRef<HTMLDivElement>(null);
-    const percentage = useRef<number>(0);
 
     // Setup State
     const [sliderPosition, setSliderPosition] = useState(0);
-    const [scrollPosition, setScrollPosition] = useState(0);
 
-    // TEMPORARY! THIS SHOULD BE READ IN A THROTTLED FUNCTION OR LISTENER
     const sliderRange = 176;
     const testimonialsWidth = testimonialsRef.current?.scrollWidth ?? 0;
     const maxScroll = testimonialsWidth - (testimonialsRef.current?.clientWidth ?? 0);
 
-    const handleSlider = () => {
+    // Sync Slider with Testimonials Section Scroll
+    const syncSlider = () => {
         let scrollProgress = testimonialsRef.current?.scrollLeft ?? 0;
         let progress = (scrollProgress / maxScroll) * sliderRange;
-        let completion = (testimonialsRef.current!.scrollLeft / maxScroll) * 100;
         setSliderPosition(progress);
-        percentage.current = Math.round(completion);
-        setScrollPosition(scrollProgress / maxScroll * 100)
     }
 
     // Slider Animation 
     useGSAP(() => {
         gsap.set(sliderRef.current, {
-            // left: `${Math.min(scrollPosition, 100)}px`,
             left: sliderPosition + "px",
-            // backgroundColor: `rgba(0, 0, 0, ${(percentage.current * 0.01)})`
-            // duration: 0.1
         })
     }, {dependencies: [sliderPosition]})
 
@@ -114,10 +106,10 @@ export default function Testimonials() {
           }, "<")
           .from("p", {
             opacity: 0,
-            duration: 2,
-            ease: 'power4.out',
+            duration: 1.5,
+            ease: 'power4.in',
             stagger: 0.1,
-          }, "<25%")
+          }, "<")
     }, {scope: ref})
 
     return (
@@ -136,7 +128,7 @@ export default function Testimonials() {
     <section 
         className={styles.testimonials} 
         ref={testimonialsRef} 
-        onScroll={handleSlider}
+        onScroll={syncSlider}
     >
         {Testimonials.map((testimonial, index) => (
             <article key={index} className={styles.testimonial} >

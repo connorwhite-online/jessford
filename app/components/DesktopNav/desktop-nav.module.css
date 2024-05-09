@@ -19,7 +19,7 @@
     .nav {
         display: flex;
         justify-content: space-between;
-        margin: 2.5dvh 5dvw;
+        padding: 2.5dvh 5dvw;
     }
     .menuButton {
         display: none;

@@ -14,13 +14,13 @@ const navTL = React.useRef<gsap.core.Timeline>();
 
 useGSAP(() => {
     navTL.current = gsap.timeline()
-    .from("li", {
+    .from(navRef.current, {
         opacity: 0,
-        y: -15,
-        // clipPath: 'inset(0 100% 0 0)',
+        y: 25,
+        clipPath: 'inset(0 0 100% 0)',
         duration: 1.5,
-        ease: 'power4.out',
-        stagger: 0.15,
+        ease: 'power2.out',
+        // stagger: 0.15,
     })
 }, {scope: navRef});
 
